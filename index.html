@@ -155,7 +155,6 @@ import {
 getAuth,
 createUserWithEmailAndPassword,
 signInWithEmailAndPassword,
-sendEmailVerification,
 sendPasswordResetEmail,
 onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
@@ -210,12 +209,11 @@ return;
 try{
 await createUserWithEmailAndPassword(auth,email,pass);
 
-const user=auth.currentUser;
-
-await sendEmailVerification(user);
-
-document.getElementById("regSuccess").textContent=
-"Registration successful! Verify your email first.";
+document.getElementById("regSuccess").textContent =
+"Registration successful!";
+setTimeout(() => {
+   window.location.href = "main.html";
+}, 1000);
 
 }catch(error){
 document.getElementById("regError").textContent=error.message;
@@ -237,13 +235,7 @@ try{
 const userCredential=
 await signInWithEmailAndPassword(auth,email,pass);
 
-if(userCredential.user.emailVerified){
-window.location.href="main.html";
-}else{
-document.getElementById("loginError").textContent=
-"Pehle apna email verify karo.";
-}
-
+window.location.href = "main.html";
 }catch(error){
 document.getElementById("loginError").textContent=
 error.message;
