@@ -7,94 +7,100 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<!-- Apni website body ke baad, close body tag se pehle ye add karein -->
-    
-    <script>
-        // Login check - agar login nahi hai to login page par jayega
-        if (localStorage.getItem('loggedIn') !== 'true') {
-            window.location.href = 'index.html';
-        }
-        
-        // User name show karein (agar aap header mein username dikhana chahte hain)
-        var currentUser = localStorage.getItem('currentUser');
-        
-        // Logout function
-        function logout() {
-            localStorage.setItem('loggedIn', 'false');
-            localStorage.removeItem('currentUser');
-            window.location.href = 'index.html';
-        }
-    </script>
-</body>
-</html>
-  
-<header>
-  <div class="logo">MOHAMMAD USMAN</div>
 
-  <nav>
-    <a href="#">Home</a>
-    <a href="#courses">Courses</a>
-    <a href="#login">Student Login</a>
-  </nav>
+  <header>
+    <div class="logo">MOHAMMAD USMAN</div>
 
-  <a href="register.html">
-    <button class="btn">Register</button>
-  </a>
-</header>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#courses">Courses</a>
+      <a href="#login">Student Login</a>
+    </nav>
 
-<section class="hero">
-  <div class="hero-text">
-    <h1>MOHAMMAD USMAN</h1>
-    <p>Computer Teacher | Trainer | Mentor</p>
-  </div>
+    <button class="btn" onclick="logout()">Logout</button>
+  </header>
 
-  <img src="image/usman.jpg.jpeg" alt="Mohammad Usman">
-</section>
-
-<section class="courses" id="courses">
-  <h2>Our Popular Courses</h2>
-
-  <div class="grid">
-    <div class="card">
-      <img src="image/word.png">
-      <h3>MS Word</h3>
-      <button>View Course</button>
+  <section class="hero">
+    <div class="hero-text">
+      <h1>MOHAMMAD USMAN</h1>
+      <p>Computer Teacher | Trainer | Mentor</p>
     </div>
 
-    <div class="card">
-      <img src="image/excel.png">
-      <h3>MS Excel</h3>
-      <a href="excel\3-Sort-Option-in-Excel.xlsx"><button>View Course</button></a>
+    <img src="image/usman.jpg.jpeg" alt="Mohammad Usman">
+  </section>
+
+  <section class="courses" id="courses">
+    <h2>Our Popular Courses</h2>
+
+    <div class="grid">
+      <div class="card">
+        <img src="image/word.png" alt="MS Word">
+        <h3>MS Word</h3>
+        <button>View Course</button>
+      </div>
+
+      <div class="card">
+        <img src="image/excel.png" alt="MS Excel">
+        <h3>MS Excel</h3>
+        <a href="excel/3-Sort-Option-in-Excel.xlsx">
+          <button>View Course</button>
+        </a>
+      </div>
+
+      <div class="card">
+        <img src="image/powerpoint.png" alt="MS PowerPoint">
+        <h3>MS PowerPoint</h3>
+        <button>View Course</button>
+      </div>
+
+      <div class="card">
+        <img src="image/photoshop.png" alt="Photoshop">
+        <h3>Photoshop</h3>
+        <button>View Course</button>
+      </div>
     </div>
+  </section>
 
-    <div class="card">
-      <img src="image/powerpoint.png">
-      <h3>MS PowerPoint</h3>
-      <button>View Course</button>
-    </div>
+  <section class="login-box" id="login">
+    <h2>Student Login</h2>
+    <p>You are already logged in.</p>
+  </section>
 
-    <div class="card">
-      <img src="image/photoshop.png">
-      <h3>Photoshop</h3>
-      <button>View Course</button>
-    </div>
-  </div>
-</section>
+  <footer>
+    © 2026 Mohammad Usman | Computer Education
+  </footer>
 
-<section class="login-box" id="login">
-  <h2>Student Login</h2>
+  <!-- Firebase check -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
 
-  <form action="backend.php" method="POST">
-    <input type="text" name="username" placeholder="Username or Email" required>
-    <input type="password" name="password" placeholder="Password" required>
+    const firebaseConfig = {
+      apiKey: "AIzaSyA5lkiDKt9lgSmKZM8m2ogYvakx2z1vol0",
+      authDomain: "usman-60738.firebaseapp.com",
+      projectId: "usman-60738",
+      storageBucket: "usman-60738.firebasestorage.app",
+      messagingSenderId: "668675134936",
+      appId: "1:668675134936:web:9e37861d957c3a35a5cead"
+    };
 
-    <button class="btn" style="width:100%">Login</button>
-  </form>
-</section>
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
 
-<footer>
-  © 2026 Mohammad Usman | Computer Education
-</footer>
+    // Login check
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        window.location.href = "index.html";
+      }
+    });
+
+    // Logout function
+    window.logout = function () {
+      signOut(auth).then(() => {
+        window.location.href = "index.html";
+      });
+    };
+  </script>
 
 </body>
 </html>
