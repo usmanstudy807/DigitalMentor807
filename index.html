@@ -227,7 +227,8 @@ if (userCredential.user.emailVerified) {
    'Pehle apna email verify karo.';
 }
     }catch(error){
-        document.getElementById("loginError").textContent="Wrong email or password";
+       document.getElementById('loginError').textContent = error.message;
+console.log(error);
     }
 }
 window.resetPassword = async function() {
@@ -241,7 +242,7 @@ window.resetPassword = async function() {
 
    try {
       await sendPasswordResetEmail(auth, email);
-      alert("Password reset email bhej diya gaya.");
+      alert("Send password reset to email.");
    } catch(error) {
       alert("Error: " + error.message);
    }
